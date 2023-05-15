@@ -36,6 +36,11 @@ $routes->post('/register/process', 'Register::process');
 $routes->get('/login', 'Login::index');
 $routes->post('/login/process', 'Login::process');
 $routes->get('/logout', 'Login::logout');
+$routes->get('/store', 'Store::index');
+$routes->get('/register', 'register::index');
+$routes->get('/comment', 'AddComments::process');
+$routes->get('buy/(:any)', 'Buy::$1', ['filter' => 'auth']);
+$routes->post('buy/(:any)', 'Buy::$1');
 
 /*
  * --------------------------------------------------------------------

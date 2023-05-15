@@ -1,7 +1,7 @@
 
 </body>
 
-<footer class="footer footer-center p-10 bg-zinc-900 text-base-content rounded">
+<footer class="footer footer-center p-10 bg-zinc-900 text-base-content rounded-none bottom-0">
   <div class="grid grid-flow-col gap-4">
     <a class="link link-hover">About us</a> 
     <a class="link link-hover">Contact</a> 

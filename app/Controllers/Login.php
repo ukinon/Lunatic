@@ -39,7 +39,7 @@ class Login extends BaseController
                     'logged_in' => TRUE
                 ]);
 
-                return redirect()->to(base_url('/'));
+                return redirect()->to(base_url('store'));
             } else {
                 session()->setFlashdata('error', 'Wrong username or password');
                 return redirect()->route('login');
