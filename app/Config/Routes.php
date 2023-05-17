@@ -38,7 +38,13 @@ $routes->post('/login/process', 'Login::process');
 $routes->get('/logout', 'Login::logout');
 $routes->get('/store', 'Store::index');
 $routes->get('/register', 'register::index');
-$routes->get('/comment', 'AddComments::process');
+$routes->post('/comment', 'AddComments::process');
+$routes->get('/transactions', 'Transaction::index');
+$routes->get('/invoice', 'Invoice::pdfGenerator');
+$routes->get('/confirm', 'Invoice::index');
+$routes->get('/cart', 'Cart::index');
+$routes->post('/add_transactions', 'Transaction::AddTransaction');
+$routes->post('/update_status', 'Transaction::updateStatus');
 $routes->get('buy/(:any)', 'Buy::$1', ['filter' => 'auth']);
 $routes->post('buy/(:any)', 'Buy::$1');
 

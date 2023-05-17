@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\StockModel;
 use App\Models\UsersModel;
+use App\Models\PaymentModel;
+use App\Models\CourierModel;
 use App\Models\CommentsModel;
 
 class Buy extends BaseController
@@ -16,11 +18,15 @@ class Buy extends BaseController
     protected $stock_model; 
     protected $users;
     protected $comments;
+    protected $payment;
+    protected $courier;
 
     public function __construct(){
         $this->stock_model = new StockModel();
         $this->users = new UsersModel();
         $this->comments = new CommentsModel();
+        $this->courier = new CourierModel();
+        $this->payment = new PaymentModel();
         $this->data['session'] = $this->session;
         }
 
@@ -31,6 +37,8 @@ class Buy extends BaseController
 
         $this->data['data'] = $qry->first();
         $this->data['comments'] = $this->comments->where("clothes_id", $id)->orderBy('created_at', 'DESC')->findAll();
+        $this->data['courier'] = $this->courier->findAll();
+        $this->data['payment'] = $this->payment->findAll();
         echo view('templates/header', $this->data);
         echo view('store/buy-view.php', $this->data);
         echo view('store/comments-view.php', $this->data);

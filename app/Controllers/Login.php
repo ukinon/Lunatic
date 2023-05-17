@@ -28,7 +28,7 @@ class Login extends BaseController
         $users = new UsersModel();
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
-        $dataUser = $users->where([
+        $dataUser = $users->select('*')->where([
             'username' => $username,
         ])->first();
         if ($dataUser) {
@@ -36,6 +36,7 @@ class Login extends BaseController
                 session()->set([
                     'username' => $dataUser->username,
                     'name' => $dataUser->name,
+                    'address' => $dataUser->address,
                     'logged_in' => TRUE
                 ]);
 

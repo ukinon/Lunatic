@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>assets/lunaticLogo.png" />
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
     <title>LNTC</title>
 </head>
@@ -31,7 +32,7 @@
           </a>
           <ul class="p-2 bg-slate-100">
             <li><a href="<?= base_url('store') ?>">Our Collection</a></li>
-            <li><a>Submenu 2</a></li>
+            <li><a href="<?= base_url('/cart') ?>"><i data-feather="shopping-cart" class="text-zinc-700"></i>Cart</a></li>
           </ul>
         </li>
         <li><a>About</a></li>
@@ -48,8 +49,8 @@
           <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
         </a>
         <ul class="p-2 bg-slate-100 z-50 text-sm">
-          <li><a class="active:bg-zinc-500" href="<?= base_url('store') ?>">Our Collection</a></li>
-          <li><a class="active:bg-zinc-500">Submenu 2</a></li>
+          <li><a class="active:bg-zinc-500" href="<?= base_url('store') ?>"><i data-feather="shopping-bag" class="text-zinc-700"></i>Our Collection</a></li>
+          <li><a href="<?= base_url('cart') ?>" class="active:bg-zinc-500"><i data-feather="shopping-cart" class="text-zinc-700"></i>Cart</a></li>
         </ul>
       </li>
       <li><a class="active:bg-zinc-500">About</a></li>

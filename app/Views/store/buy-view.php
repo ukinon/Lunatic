@@ -17,45 +17,62 @@
   </div> 
     </div>
 
-    
+    <form method="post" action="<?=base_url('/add_transactions')?>">
     <div class="flex flex-col gap-5 m-5 h-full text-zinc-800">
-        <h1 class="text-3xl"> <?php echo $data['name'] ?> </h1>
-        <p class="text-lg"> Rp.<?php echo $data['price'] ?> </p>
+        <input <?php if(!session('admin_logged_in')){echo "readonly";} ?> type="text" name="item_name" id="item_name" class="text-3xl bg-transparent" value="<?php echo $data['name'] ?>"/>
+        <div class="flex flex-row items-center">
+        <h3>Rp.</h3>
+        <input <?php if(!session('admin_logged_in')){echo "readonly";} ?>  type="number" name="price" id="price" class="text-lg bg-transparent text-zinc" value="<?php echo $data['price'] ?>">
+        </div>
         <p class="text-lg"> <?php echo $data['desc'] ?></p>
         <p class="text-lg"> Size: </p>
         <div class="flex gap-2 flex-row">
         <div class="form-control">
+
   <label class="label cursor-pointer">
     <span class="label-text text-zinc-700 mr-3">S</span> 
-    <input type="radio" name="radio-10" class="radio checked:bg-zinc-700 border-zinc-700" />
+    <input type="radio" name="size" class="radio checked:bg-zinc-700 border-zinc-700" value="S" required />
   </label>
 </div>
 <div class="form-control">
   <label class="label cursor-pointer">
     <span class="label-text text-zinc-700 mr-3">M</span> 
-    <input type="radio" name="radio-10" class="radio checked:bg-zinc-700 border-zinc-700" />
+    <input type="radio" name="size" class="radio checked:bg-zinc-700 border-zinc-700" value="M" required />
   </label>
 </div>
 <div class="form-control">
   <label class="label cursor-pointer">
     <span class="label-text text-zinc-700 mr-3">L</span> 
-    <input type="radio" name="radio-10" class="radio checked:bg-zinc-700 border-zinc-700" />
+    <input type="radio" name="size" class="radio checked:bg-zinc-700 border-zinc-700" value="L" required />
   </label>
 </div>
 <div class="form-control">
   <label class="label cursor-pointer">
     <span class="label-text text-zinc-700 mr-3">XL</span> 
-    <input type="radio" name="radio-10" class="radio checked:bg-zinc-700 border-zinc-700" />
+    <input type="radio" name="size" class="radio checked:bg-zinc-700 border-zinc-700" value="XL" required />
   </label>
 </div>
         </div>
+        <select name="payment_method" id="payment_method" class="bg-slate-50 text-zinc-800 rounded-lg h-12" required>
+                        <option value="">Payment Method</option>
+                        <?php foreach ($payment as $key => $value) : ?>
+                        <option value="<?=$value['payment_method']?>" ><?=$value['payment_method']?> - (admin fee: <?=$value['admin_fee']?>) </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <select name="courier" id="courier" class="bg-slate-50 text-zinc-800 rounded-lg h-12" required>
+                        <option value="">Courier</option>
+                        <?php foreach ($courier as $key => $value) : ?>
+                        <option value="<?=$value['courier_name']?>" ><?=$value['courier_name']?> - (price: <?=$value['price']?>)</option>
+                        <?php endforeach; ?>
+                    </select>
         <div class="form-control">
   <label class="input-group bg-slate-100">
     <span class="bg-slate-100">Qty</span>
-    <input type="number" placeholder="10" class="input input-bordere bg-slate-50" />
+    <input type="number" name="quantity"  class="input input-bordere bg-slate-50" required />
   </label>
 </div>
-          <a class="btn"> Order Now </a>
+          <button type="submit" class="btn"> Order Now </button>
+</form>
     </div>
 
     <div class="flex flex-row lg:flex-col">

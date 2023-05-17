@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CheckOutModel extends Model
+class CourierModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'checkouts';
+    protected $table            = 'courier';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['courier_name', 'price'];
 
     // Dates
     protected $useTimestamps = false;

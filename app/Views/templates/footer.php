@@ -1,4 +1,6 @@
-
+<script>
+  feather.replace()
+</script>
 </body>
 
 <footer class="footer footer-center p-10 bg-zinc-900 text-base-content rounded-none bottom-0">
