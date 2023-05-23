@@ -31,54 +31,23 @@ class Cart extends BaseController
     public function index()
     {
         $arrayPending = array('user' => session("name"), 'status' => 'pending');
-        $arrayComplete = array('user' => session("name"), 'status' => 'paid');
-        $this->data["pending"] = $this->transaction->select('*')->where($arrayPending)->get()->getResult();
-        $this->data["complete"] = $this->transaction->select('*')->where($arrayComplete)->get()->getResult();
+        $this->data["pending"] = $this->transaction->select('*')->orderBy("created_at", "DESC")->where($arrayPending)->get()->getResult();
         echo view('/templates/header', $this->data);
         echo view('/store/cart-view.php', $this->data);
         echo view('/templates/footer');
     }
 
-    public function updateStatus(){
-        $this->transaction->where(['id' => $this->request->getPost('id')])->set('status','paid')->update();
-        redirect()->to('/invoice');
+    public function history()
+    {
+        $arrayComplete = array('user' => session("name"), 'status' => 'paid');
+        $this->data["complete"] = $this->transaction->select('*')->orderBy("created_at", "DESC")->where($arrayComplete)->get()->getResult();
+        echo view('/templates/header', $this->data);
+        echo view('/store/history-view.php', $this->data);
+        echo view('/templates/footer');
     }
-
-    public function pdfGenerator(){
-        $dompdf = new Dompdf();
-        $transaction = $this->transaction->select('*')->orderBy('id', 'DESC')->limit(1)->first();
-        $delivery = $this->courier->select('price')->where(['courier_name' => $transaction['delivery_courier']])->first();
-        $payment = $this->payment->select('admin_fee')->where(['payment_method' => $transaction['payment_method']])->first();
-        $users = $this->user->select('name')->where(['name' => session("name")])->first();
-        $data = [
-            'imageSrc'    => $this->imageToBase64(ROOTPATH . 'public\assets\lunaticLogo.png'),
-            'item_name'         => $transaction['item_name'],
-            'size'      => $transaction['size'],
-            'quantity' => $transaction['quantity'],
-            'price'        => $transaction['price'],
-            'payment_method' => $transaction['payment_method'],
-            'delivery_courier' => $transaction['delivery_courier'],
-            'address' => $transaction['address'],
-            'total_price' => $transaction['total_price'],
-            'id' => $transaction['id'],
-            'created_at' => $transaction['created_at'],
-            'delivery_price' => $delivery['price'],
-            'admin_fee' => $payment['admin_fee'],
-            'user' => $users->name
-        ];
-        $html = view('store/invoice.php', $data);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-        $dompdf->stream('invoice.pdf', [ 'Attachment' => false ]);
-    }
-
-    private function imageToBase64($path) {
-        $path = $path;
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        return $base64;
-    }
-
     
+    public function cancel($id = ''){
+        $this->transaction->where(['id' => $id])->delete();
+        return redirect()->back();
+    }
 }

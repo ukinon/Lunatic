@@ -10,7 +10,8 @@
   
     <div class="flex flex-col gap-5 m-5 h-full text-zinc-800">
         <input type="hidden" value="<?= $data['id']; ?>" name="id">
-        <input readonly disabled type="text" name="item_name" class="text-3xl bg-transparent" value="<?php echo $data['item_name'] ?>"/>
+        <input type="hidden" value="<?= $data['quantity']; ?>" name="quantity">
+        <input readonly type="text" name="item_name" class="text-3xl bg-transparent" value="<?php echo $data['item_name'] ?>"/>
         <div class="flex flex-row items-center">
         <h3>Rp.</h3>
         <input readonly disabled  type="number" name="price" class="text-lg bg-transparent text-zinc" value="<?php echo $data['price'] ?>">

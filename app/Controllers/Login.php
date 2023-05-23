@@ -31,6 +31,11 @@ class Login extends BaseController
         $dataUser = $users->select('*')->where([
             'username' => $username,
         ])->first();
+        if ($dataUser->role == 'administrator') {
+            session()->set([
+                'isAdmin' => TRUE
+            ]);
+        }
         if ($dataUser) {
             if (password_verify($password, $dataUser->password)) {
                 session()->set([
@@ -39,7 +44,6 @@ class Login extends BaseController
                     'address' => $dataUser->address,
                     'logged_in' => TRUE
                 ]);
-
                 return redirect()->to(base_url('store'));
             } else {
                 session()->setFlashdata('error', 'Wrong username or password');

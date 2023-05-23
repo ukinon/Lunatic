@@ -2,13 +2,11 @@
 
 <div class="bg-slate-200 flex flex-col justify-center items-center h-auto w-full">
 <?php if (!empty(session()->getFlashdata('error'))) : ?>
-                <div class="alert alert-warning alert-dismissible fade w-10/12 show" role="alert">
-                    <h4>Error:</h4>
-                    </hr />
+                <div class="alert alert-warning flex justify-start w-1/2" role="alert">
                     <?php echo session()->getFlashdata('error'); ?>
                 </div>
             <?php endif; ?>
-            <div class="flex flex-col items-center m-3">
+            <div class="flex flex-col w-full items-center m-3">
         <h1 class="h3 mb-3 font-thin fw-normal text-3xl text-black">Become a Lunatic!</h1>
         <div class="flex p-10 items-center justify-center m-3 rounded-lg w-10/12 lg:w-fit bg-slate-100 shadow-lg lg:h-fit h-fit">
         <form method="post" action="<?= base_url(); ?> register/process">

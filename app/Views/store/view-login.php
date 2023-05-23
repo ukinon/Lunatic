@@ -10,7 +10,7 @@
             <div class="hidden lg:flex text-3xl">
             <img src="<?php echo base_url();?>assets/lunaticLogo.png">
             </div>
-        <div class="flex p-10 items-center justify-center lg:ml-48 rounded-md shadow-lg w-10/12 lg:w-fit bg-slate-300 lg:h-5/6 h-3/4">
+        <div class="flex p-10 items-center justify-center lg:ml-48 rounded-md shadow-lg w-full lg:w-fit bg-slate-300 lg:h-5/6 h-fit">
         <form method="post" action="<?= base_url(); ?>login/process">
             <?= csrf_field(); ?>
             <h1 class="h3 mb-3 fw-normal text-xl text-black">Login</h1>

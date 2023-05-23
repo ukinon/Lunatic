@@ -26,4 +26,16 @@ class Store extends BaseController
         echo view('store/store-view.php', $this->data);
         echo view('templates/footer');
     }
+
+    public function update_stock(){
+        $addStock = $this->request->getPost('stock');
+        $post =     [
+            'name' => $this->request->getPost('item_name'),
+            'price' => $this->request->getPost('price'),
+            'desc' => $this->request->getPost('desc')
+        ];
+        $this->stock_model->where(['id' => $this->request->getPost('id')])->set($post)->update();
+        $this->stock_model->where(['id' => $this->request->getPost('id')])->set('stock', "stock + $addStock", FALSE)->update();
+        return redirect()->back();  
+    }
     }

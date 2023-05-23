@@ -1,14 +1,52 @@
+
 <div class="flex flex-col gap-5 m-5 justify-start min-h-screen">
     <h1 class="text-3xl font-thin text-zinc-800"> Pending Orders </h1>
+    <?php if(count($pending) > 0){ ?>
     <?php foreach ($pending as $pending): ?>
-    <div class="h-fit w-full flex flex-row p-3 rounded-lg font-thin shadow-md bg-slate-50">
-        <p class="text-xl text-zinc-800"> <?= $pending->item_name ?> </p>
+        <a href="<?= base_url('transaction/cartTransaction/').$pending->id?>">
+    <div class="h-fit w-full p-3 rounded-lg font-thin shadow-md bg-slate-50">
+        <div class="m-3 flex flex-row justify-between">
+        <div class="flex flex-col gap-2">
+        <p class="text-lg text-zinc-800"> <?= $pending->item_name ?> (<?= $pending->quantity ?>)  </p>
+        <p class="text-sm text-zinc-800"> <?= $pending->size ?> </p>
+        <p class="text-lg text-zinc-800">Rp. <?= $pending->price * $pending->quantity ?> </p>
+        </div>
+        <label class="trash-icon" data-id="<?= $pending->id ?>" for="my-modal-6"><i data-feather="trash" class="bg-transparent trash-icon"></i></label>
+        </div>
     </div>
+    </a>
     <?php endforeach ?>
-    <h1 class="text-3xl font-thin text-zinc-800"> Completed Orders </h1>
-    <?php foreach ($complete as $complete): ?>
-    <div class="h-fit w-full  flex flex-row p-3 rounded-lg font-thin shadow-md bg-slate-50">
-        <p class="text-xl text-zinc-800"> <?= $complete->item_name ?> </p>
-    </div>
-    <?php endforeach ?>
+    <?php } else{ ?>
+            <div class="w-full h-10/12 flex justify-center h-screen items-center">
+                <h1 class="text-3xl font-thin text-zinc-800"> Your Cart is Empty </h1>
+            </div>
+        <?php } ?>
 </div>
+
+<!-- The button to open modal -->
+
+
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="my-modal-6" class="modal-toggle" />
+<div class="modal modal-bottom sm:modal-middle text-zinc-800">
+  <div class="modal-box bg-slate-50">
+    <div class="flex flex-row gap-3 items-center">
+    <i data-feather="x-circle" class="w-14 h-14 text-red-500"></i>
+    <h3 class="font-light text-lg text-zinc-800">Are you sure you want to cancel your order?</h3>
+    </div>
+    <div class="modal-action">
+    <label for="my-modal-6" class="btn bg-transparent border-zinc-700 w-24 text-zinc-800">No</label>
+    <a id="deleteBtn" class="btn bg-red-500 border-none w-24 text-zinc-700 px-8"> Yes </a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    $('.trash-icon').click(function(){
+    //get cover id
+    var id=$(this).data('id');
+    //set href for cancel button
+    $('#deleteBtn').attr('href','<?= base_url('cart/cancel/')?>'+id);
+})
+  </script>

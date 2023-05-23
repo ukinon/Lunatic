@@ -1,4 +1,4 @@
-<div class="lg:mt-16 mt-6 flex flex-col justify-start align-middle">
+<div class=" mt-5 flex flex-col justify-start align-middle">
 <h1 class="text-3xl ml-5 text-zinc-700 font-thin"> Check Out Our Collection </h1>
 <div class="flex justify-center lg:justify-start gap-5 lg:gap-10 bg-slate-200 h-auto lg:min-h-screen text-zinc-700 flex-wrap m-5">
 <?php if(count($list) > 0){ ?>

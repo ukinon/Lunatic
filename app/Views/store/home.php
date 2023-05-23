@@ -1,4 +1,4 @@
-<div class="flex flex-col bg-slate-200">
+<div class="flex flex-col bg-slate-200 overflow-hidden">
 <div class="hero min-h-screen" style="background-image: url(<?php echo base_url();?>assets/hero.jpg);">
   <div class="hero-overlay bg-opacity-60"></div>
   <div class="hero-content text-center text-neutral-content">
@@ -12,7 +12,7 @@
 </div>
 
 
-<div class="hero min-h-screen bg-slate-200 text-black">
+<div class="hero min-h-screen bg-slate-200 text-black overflow-hidden">
   <div class="hero-content flex-col lg:flex-row">
     <img src="<?php echo base_url();?>assets/hero-2.jpg" class="max-w-sm rounded-lg shadow-2xl" />
     <div>
@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<div class="hero min-h-screen bg-zinc-800">
+<div class="hero min-h-screen bg-zinc-800 overflow-hidden">
   <div class="hero-content flex-col lg:flex-row-reverse">
     <img src="<?php echo base_url();?>assets/hero-1.jpg" class="max-w-sm rounded-lg shadow-2xl" />
     <div>

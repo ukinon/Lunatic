@@ -67,13 +67,33 @@ class Transaction extends BaseController
             'delivery_courier' => $this->request->getPost('courier'),
             'total_price' => $this->request->getPost('quantity')*$this->request->getPost('price')+$pay+$cour,
             'address' => session('address'),
+            'user' => session('name'),
         ]);
 
         return redirect()->route('transactions');
     }
 
     public function updateStatus(){
+        $stockQty = $this->request->getPost('quantity');
         $this->transaction->where(['id' => $this->request->getPost('id')])->set('status','paid')->update();
+        $this->stock->where(['name' => $this->request->getPost('item_name')])->set('stock', "stock - $stockQty", FALSE )->update();
         return redirect()->to('/confirm');
+    }
+
+    public function cartTransaction($id = '')
+    {
+        $transaction = new TransactionModel();
+
+        $transArr = $transaction->select('*')->where(['id' => $id])->first();
+
+        $pay = $transArr['payment_method'];
+        $cour = $transArr['delivery_courier'];
+
+        $this->data["data"] = $this->transaction->select('*')->orderBy('id', 'DESC')->limit(1)->first();
+        $this->data["courierArr"] = $this->courier->select('*')->where(['courier_name' => $cour])->first();
+        $this->data["paymentArr"] = $this->payment->select('*')->where(['payment_method' => $pay])->first();
+        echo view('/templates/header', $this->data);
+        echo view('/store/transaction-view.php', $this->data);
+        echo view('/templates/footer');
     }
 }
