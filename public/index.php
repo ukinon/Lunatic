@@ -41,6 +41,8 @@ require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstra
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 (new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
 
+date_default_timezone_set('Asia/Jakarta');
+
 /*
  * ---------------------------------------------------------------
  * GRAB OUR CODEIGNITER INSTANCE

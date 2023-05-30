@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>assets/lunaticLogo.png" />
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="../../../tailwind.config.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <title>LNTC</title>
 </head>
@@ -71,6 +72,7 @@
           <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
         </a>
         
+        
         <ul class="p-2 bg-slate-100 z-50 text-sm">
           <li><a class="active:bg-zinc-500" href="<?= base_url('cart/history') ?>"><i data-feather="clock"></i>History</a></li>
           <li><a href="<?= base_url('cart') ?>" class="active:bg-zinc-500"><i data-feather="shopping-cart" class="text-zinc-700"></i>Cart</a></li>
@@ -87,10 +89,22 @@
 
     <?php } else{ ?>
       <div class="dropdown dropdown-end">
-  <label tabindex="0" class="m-3 cursor-pointer"><?php echo session("name") ?></label>
+  <label tabindex="0" class="m-3 cursor-pointer">
+  <div class="avatar">
+  <div class="w-10 lg:w-10 rounded-full bg-zinc-800" aria-placeholder="avatar">
+    <img src="<?= base_url() ?>/<?= session('imagePath') ?>" />
+  </div>
+  </div>
+  </label>
   <ul tabindex="0" class="dropdown-content menu p-2 text-xs lg:text-sm shadow bg-slate-100 text-black rounded-box w-52">
-    <li>  
-    <a href="<?= base_url('profile') ?>" class="active:bg-zinc-500" ><i data-feather="user"></i>Profile</a></li>
+  <li>
+    <div class="flex border border-opacity-20 border-zinc-800 rounded-0 flex-col items-start"> 
+    <p class="font-semibold text-sm"> <?= session('name') ?></p>
+ <p class="font-thin text-xs"> <?= session('username') ?></p>
+ </div> 
+</li>
+     
+  <li> <a href="<?= base_url('profile') ?>" class="active:bg-zinc-500" ><i data-feather="user"></i>Profile</a></li>
     <li><a class="active:bg-zinc-500" href="<?=base_url('logout')?>"><i data-feather="log-out"></i>Logout</a></li>
   </ul>
 </div> 

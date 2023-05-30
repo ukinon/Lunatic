@@ -13,7 +13,7 @@ class PaymentModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['payment_method', 'admin_fee'];
+    protected $allowedFields    = ['payment', 'admin_fee'];
 
     // Dates
     protected $useTimestamps = false;

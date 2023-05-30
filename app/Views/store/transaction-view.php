@@ -1,30 +1,35 @@
-<div class="flex flex-row w-full justify-center items-center min-h-screen">
-    <div class="flex p-3 bg-slate-100 flex-col m-3 h-3/6 rounded-lg shadow-lg">
-    <div class="flex flex-col items-start border-b border-zinc-700">
-    <h1 class="text-xl m-3 text-zinc-800 text-bold"> Address: </h1>
-    <p class="text-lg ml-3 mb-3 text-zinc-800"> <?= $data['address'] ?> </p>
-    </div>
-    <div class="flex justify-center w-full">
 
-<form method="post" action="<?=base_url('/update_status')?>">
-  
-    <div class="flex flex-col gap-5 m-5 h-full text-zinc-800">
-        <input type="hidden" value="<?= $data['id']; ?>" name="id">
+<div class="flex justify-center m-10">
+    <div class="border border-zinc-800 border-opacity-50 rounded-lg  lg:w-8/12">
+    <form method="post" action="<?=base_url('/update_status')?>">
+    <input type="hidden" value="<?= $data['id']; ?>" name="id">
         <input type="hidden" value="<?= $data['quantity']; ?>" name="quantity">
-        <input readonly type="text" name="item_name" class="text-3xl bg-transparent" value="<?php echo $data['item_name'] ?>"/>
-        <div class="flex flex-row items-center">
-        <h3>Rp.</h3>
-        <input readonly disabled  type="number" name="price" class="text-lg bg-transparent text-zinc" value="<?php echo $data['price'] ?>">
-        </div>
-        <p class="text-lg"> Size: <?= $data['size']; ?> </p>
-    <h3 class="text-lg text-zinc-800"> Quantity: <?= $data['quantity']; ?>  </h3>
-    <h3 class="text-lg text-zinc-800"> Payment Method: <?= $data['payment_method']; ?> ( Rp.<?= $paymentArr['admin_fee'] ?> )  </h3>
-    <h3 class="text-lg text-zinc-800"> Delivery Courier: <?= $data['delivery_courier']; ?> ( Rp.<?= $courierArr['price'] ?> )  </h3>
-<h1 class="text-lg text-zinc-800 border-t border-zinc-700"> Total Price: Rp.<?php echo $data["total_price"] ?> </h1>
-<button type="submit" class="btn bg-zinc-800"> Place Order </button>
-</div>
-</form>
-</div>
+        <div class="m-3 flex flex-col gap-5 lg:gap-3 p-3 min-w-max ">
+        <h1 class="text-3xl font-thin text-zinc-800 m-3"> Confirm Order </h1>
 
-  </div>
-</div>
+  
+ 
+                    <input readonly type="text" name="item_name" id="item_name" value="<?php echo $data['item_name'] ?>" placeholder="Item Name" class="input w-full input-bordered bg-slate-50 text-black" <?php if(!session('isAdmin')) echo "required"; ?> />
+
+                    <input readonly type="text" value="Payment Method: <?= $data['payment_method']; ?> ( Rp.<?= $paymentArr['admin_fee'] ?> )" placeholder="Item Name" class="input w-full input-bordered bg-slate-50 text-black" <?php if(!session('isAdmin')) echo "required"; ?> />
+
+                    <input readonly type="text" value="Delivery Courier: <?= $data['delivery_courier']; ?> ( Rp.<?= $courierArr['price'] ?> )" placeholder="Item Name" class="input w-full input-bordered bg-slate-50 text-black" <?php if(!session('isAdmin')) echo "required"; ?> />
+
+    
+       <label class="input-group w-full">
+                      <span> Qty </span>
+                    <input readonly type="number" name="quantity" id="quantity" min=0 value="<?= $data['quantity']; ?>"  class="input w-full input-bordered bg-slate-50 text-black" <?php if(!session('isAdmin')) echo "required"; ?> />
+                        
+                  </label>
+
+
+                    <h3 class="text-zinc-800 text-lg">Total: Rp.<?= number_format($data['total_price'], 2,',','.') ?></h3>
+                        
+
+            
+                  <button type="submit" class="btn bg-zinc-800"> Place Order </button>
+     
+                        </div>
+                        </form>
+    </div>
+        </div>

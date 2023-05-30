@@ -71,27 +71,25 @@ class Invoice extends BaseController
 
     public function cartInv($id = ''){
         $dompdf = new Dompdf();
-        $transaction = $this->transaction->select('*')->where(['id' => $id])->first();
-        $delivery = $this->courier->select('price')->where(['courier_name' => $transaction['delivery_courier']])->first();
-        $payment = $this->payment->select('admin_fee')->where(['payment_method' => $transaction['payment_method']])->first();
+
+        $this->data['transaction'] = $this->transaction->select('*')->where(['invoice_id' => $id])->get()->getResult();
+
+        $row = $this->transaction->select('*')->where(['invoice_id' => $id])->first();
+
+        
         $users = $this->user->select('name')->where(['name' => session("name")])->first();
-        $data = [
-            'imageSrc'    => $this->imageToBase64(ROOTPATH . 'public\assets\lunaticLogo.png'),
-            'item_name'         => $transaction['item_name'],
-            'size'      => $transaction['size'],
-            'quantity' => $transaction['quantity'],
-            'price'        => $transaction['price'],
-            'payment_method' => $transaction['payment_method'],
-            'delivery_courier' => $transaction['delivery_courier'],
-            'address' => $transaction['address'],
-            'total_price' => $transaction['total_price'],
-            'id' => $transaction['id'],
-            'created_at' => $transaction['created_at'],
-            'delivery_price' => $delivery['price'],
-            'admin_fee' => $payment['admin_fee'],
-            'user' => $users->name
-        ];
-        $html = view('store/invoice.php', $data);
+
+
+
+
+
+    $this->data["data"] = [
+        'imageSrc' => $this->imageToBase64(ROOTPATH . 'public\assets\lunaticLogo.png'),
+        'user' => $users->name,
+        'created_at' => $row['created_at'],
+        'id' => $id,
+    ];
+        $html = view('store/invoice.php', $this->data);
         $dompdf->loadHtml($html);
         $dompdf->render();
         $dompdf->stream('invoice.pdf', [ 'Attachment' => false ]);

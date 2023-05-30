@@ -10,7 +10,7 @@
         <p class="text-lg text-zinc-800">Rp. <?= $complete->price * $complete->quantity ?> </p>
         <p class="text-xs text-zinc-800"><?= $complete->created_at?> </p>
         </div>
-        <a href="<?= base_url('invoice/cartInv/'.$complete->id) ?>"><i data-feather="download" class="bg-transparent download-icon"></i></a>
+        <a href="<?= base_url('invoice/cartInv/'.$complete->invoice_id) ?>"><i data-feather="download" class="bg-transparent download-icon"></i></a>
         </div>
     </div>
     <?php endforeach ?>

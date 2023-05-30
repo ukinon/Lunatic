@@ -57,10 +57,20 @@ class Register extends BaseController
                     'max_length' => '{field} 100 Characters Max',
                 ]
             ],
+            'image_avatar' => [
+                'rules' => 'uploaded[image_avatar]|mime_in[image_avatar,image/jpg,image/jpeg,image/gif,image/png]|',
+                'errors' => [
+                    'uploaded' => 'No Uploaded Files',
+                    'mime_in' => 'File Extention Must Be jpg, jpeg, gif, png',
+                ]
+                ],
         ])) {
             session()->setFlashdata('error', $this->validator->listErrors());
             return redirect()->back()->withInput();
         }
+
+        $dataImage = $this->request->getFile('image_avatar');
+		$fileName = $dataImage->getRandomName();
         $users = new UsersModel();
         $users->insert([
             'username' => $this->request->getVar('username'),
@@ -68,8 +78,10 @@ class Register extends BaseController
             'name' => $this->request->getVar('name'),
             'address' => $this->request->getVar('address'),
             'birth_date' => $this->request->getVar('birth_date'),
-            'user_type' => 'user'
+            'user_type' => 'user',
+            'imagePath' => "assets/content/users/$fileName"
         ]);
+        $dataImage->move('assets/content/users/', $fileName);
         return redirect()->to('/login');
     }
 }

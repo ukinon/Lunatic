@@ -58,6 +58,23 @@ class Transaction extends BaseController
         $pay = $paymentAdmin['admin_fee'];
         $cour = $courierPrice['price'];
 
+        $arrayTransaction =[
+            'item_name' => $this->request->getPost('item_name'),
+            'size' => $this->request->getPost('size'),
+            'payment_method' => $this->request->getPost('payment_method'),
+            'delivery_courier' => $this->request->getPost('courier'),
+            'status' => 'pending'
+        ];
+
+        $quantity = $this->request->getPost('quantity');
+        $transactionSelect = $this->transaction->where($arrayTransaction)->select('*')->get()->getResult();
+        $price = $this->request->getPost('price');
+
+        if(count($transactionSelect)>0){
+            $this->transaction->where($arrayTransaction)->set('quantity', "quantity + $quantity", false)->update();
+            $this->transaction->where($arrayTransaction)->set('total_price', "total_price + $quantity * $price", false)->update();
+        }else{
+
         $this->transaction->insert([
             'item_name' => $this->request->getPost('item_name'),
             'size' => $this->request->getPost('size'),
@@ -68,7 +85,9 @@ class Transaction extends BaseController
             'total_price' => $this->request->getPost('quantity')*$this->request->getPost('price')+$pay+$cour,
             'address' => session('address'),
             'user' => session('name'),
+            'invoice_id' => random_string('alnum', 20)
         ]);
+    }
 
         return redirect()->route('transactions');
     }
@@ -78,6 +97,28 @@ class Transaction extends BaseController
         $this->transaction->where(['id' => $this->request->getPost('id')])->set('status','paid')->update();
         $this->stock->where(['name' => $this->request->getPost('item_name')])->set('stock', "stock - $stockQty", FALSE )->update();
         return redirect()->to('/confirm');
+    }
+
+    public function updateCartStatus(){
+        $cart_id = $this->request->getPost('cart_id');
+        $inv_id =  random_string('alnum', 20);
+$quantity = $this->request->getPost('cart_quantity');
+
+        for($i=0; $i<sizeof($cart_id); $i++){
+            $data_id = array('id' => $cart_id[$i]);
+            $this->transaction->where(['id' => $data_id])->set('status','paid')->update();
+            $this->transaction->where(['id' => $data_id])->set('invoice_id', "$inv_id")->update(); 
+            $this->transaction->where(['id' => $data_id])->set('quantity', "$quantity[$i]")->update();   
+        }
+        $cart_name = $this->request->getPost('cart_name');
+        $stockQty = $this->request->getPost('cart_quantity');
+        for($i=0; $i<sizeof($cart_name); $i++){
+            $data_name = array('name' => $cart_name[$i]);
+            $stocks = $stockQty[$i];
+            $this->stock->where(['name' => $data_name])->set('stock', "stock - $stocks", FALSE )->update();
+        }
+
+        return redirect()->back();
     }
 
     public function cartTransaction($id = '')

@@ -7,7 +7,6 @@ use App\Controllers\BaseController;
 class Main extends BaseController
 {
 
-    protected $session;
     protected $data; 
 
     public function index()

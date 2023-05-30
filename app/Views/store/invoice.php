@@ -125,12 +125,12 @@
 						<table>
 							<tr>
 								<td class="title">
-									<img src="<?= $imageSrc ?>" alt="Company logo" style="width: 50%; max-width: 100px" />
+									<img src="<?= $data['imageSrc'] ?>" alt="Company logo" style="width: 50%; max-width: 100px" />
 								</td>
 
 								<td>
-									Invoice #: <?= $id ?><br />
-									Created: <?= $created_at ?><br />
+									Invoice #: <?= $data['id'] ?><br />
+									Created: <?=  $data['created_at'] ?><br />
 								</td>
 							</tr>
 						</table>
@@ -156,23 +156,23 @@
 								</td>
 
 								<td>
-                                For: <?= $user ?><br /><br />
+                                For: <?= $data['user'] ?><br /><br />
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
-
+			<?php foreach($transaction as $data){ ?>
 				<tr class="heading">
 					<td>Payment Method</td>
 
-					<td><?= $payment_method ?> #</td>
+					<td><?= $data->payment_method ?> #</td>
 				</tr>
 
 				<tr class="details">
-					<td><?= $payment_method ?></td>
+					<td><?= $data->payment_method ?></td>
 
-					<td>Rp.<?= $total_price ?></td>
+					<td>Rp.<?= number_format($data->total_price, 2,',','.') ?></td>
 				</tr>
 
 				<tr class="heading">
@@ -182,28 +182,25 @@
 				</tr>
 
 				<tr class="item">
-					<td><?= $item_name ?> (<?= $quantity ?>)</td>
 
-					<td>Rp.<?php $priceQty = $price * $quantity; echo $priceQty ?></td>
+					<td><?= $data->item_name ?> (<?= $data->quantity ?>)</td>
+
+
+					<td>Rp.<?php $priceQty = $data->price * $data->quantity; echo number_format($priceQty, 2,',','.') ?></td>
 				</tr>
 
-				<tr class="item">
-					<td><?= $delivery_courier ?></td>
+				<tr class="item-last">
+					<td><?= $data->delivery_courier ?></td>
 
-					<td><?= $delivery_price ?></td>
-				</tr>
-
-				<tr class="item last">
-					<td>Admin Fee</td>
-
-					<td><?= $admin_fee ?></td>
 				</tr>
 
 				<tr class="total">
 					<td></td>
 
-					<td>Total: <?= $total_price ?></td>
+					<td>Total: Rp.<?= number_format($data->total_price, 2,',','.') ?></td>
 				</tr>
+				<br><br>
+				<?php } ?>
 			</table>
 		</div>
 	</body>

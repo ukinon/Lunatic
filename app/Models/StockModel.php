@@ -13,9 +13,9 @@ class StockModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','name', 'price', 'stock', 'desc'];
+    protected $allowedFields    = ['id','name', 'price', 'stock', 'desc', 'image1', 'image2'];
 
-    // Dates
+    // Dates    
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';

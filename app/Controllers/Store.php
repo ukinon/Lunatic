@@ -38,4 +38,9 @@ class Store extends BaseController
         $this->stock_model->where(['id' => $this->request->getPost('id')])->set('stock', "stock + $addStock", FALSE)->update();
         return redirect()->back();  
     }
+    
+    public function delete_stock(){
+        $this->stock_model->where(['id' => $this->request->getPost('id')])->delete();
+        return redirect()->to('store');  
+    }
     }

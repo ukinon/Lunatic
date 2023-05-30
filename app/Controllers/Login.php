@@ -29,7 +29,7 @@ class Login extends BaseController
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
         $dataUser = $users->select('*')->where([
-            'username' => $username,
+            'username' => $username
         ])->first();
         if ($dataUser->role == 'administrator') {
             session()->set([
@@ -42,8 +42,10 @@ class Login extends BaseController
                     'username' => $dataUser->username,
                     'name' => $dataUser->name,
                     'address' => $dataUser->address,
+                    'imagePath' => $dataUser->imagePath,
                     'logged_in' => TRUE
                 ]);
+                session_start();
                 return redirect()->to(base_url('store'));
             } else {
                 session()->setFlashdata('error', 'Wrong username or password');

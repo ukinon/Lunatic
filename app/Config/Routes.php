@@ -46,7 +46,9 @@ $routes->get('/confirm', 'Invoice::index');
 $routes->get('/cart', 'Cart::index', ['filter' => 'auth']);
 $routes->post('/add_transactions', 'Transaction::AddTransaction');
 $routes->post('/update_status', 'Transaction::updateStatus');
+$routes->post('/update_cart_status', 'Transaction::updateCartStatus');
 $routes->post('/update_stock', 'Store::update_stock');
+$routes->post('/delete_stock', 'Store::delete_stock');
 
 $routes->get('buy/(:any)', 'Buy::$1', ['filter' => 'auth']);
 $routes->post('buy/(:any)', 'Buy::$1');
@@ -58,6 +60,8 @@ $routes->get('transaction/(:any)', 'Transaction::$1');
 $routes->post('transaction/(:any)', 'Transaction::$1');
 $routes->get('invoice/(:any)', 'Invoice::$1');
 $routes->post('invoice/(:any)', 'Invoice::$1');
+$routes->get('profile/(:any)', 'Profile::$1');
+$routes->post('profile/(:any)', 'Profile::$1');
 
 
 /*

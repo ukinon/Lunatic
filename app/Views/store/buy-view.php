@@ -1,24 +1,24 @@
 <div class="flex justify-center w-full">
-<div class="flex lg:flex-row w-3/4 flex-col gap-3 min-h-screen items-center lg:items-start lg:justify-between m-5">
-<div class="carousel sm:w-full sm:h-5/6 h-full w-5/6 rounded">
+<div class="flex lg:flex-row w-11/12 lg:w-10/12 flex-col gap-3 min-h-screen items-center lg:items-start lg:justify-between m-5">
+<div class="carousel sm:h-auto h-full rounded"}>
   <div id="slide1" class="carousel-item relative w-full">
-    <img src="<?php echo base_url() ?>assets/content/display/<?php echo $data['id'] ; ?>-1.png" class="w-full" />
+    <img src="<?php echo base_url(); echo $data['image1'] ?>" class="w-full" />
     <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
       <a disabled class="btn btn-circle">❮</a> 
-      <a href="#slide2" class="btn btn-circle">❯</a>
+      <a href="#slide2" class="btn btn-circle carousel-control">❯</a>
     </div>
   </div> 
   <div id="slide2" class="carousel-item relative w-full">
-    <img src="<?php echo base_url() ?>assets/content/display/<?php echo $data['id'] ; ?>-2.png" class="w-full" />
+    <img src="<?php echo base_url(); echo $data['image2'] ?>" class="w-full" />
     <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide1" class="btn btn-circle">❮</a> 
+      <a href="#slide1" class="btn btn-circle carousel-control">❮</a> 
       <a disabled class="btn btn-circle">></a> 
     </div>
   </div> 
     </div>
 
-    <form method="post" action="<?php if(session('isAdmin')){ echo base_url('/update_stock'); } else if(!session('isAdmin')){ echo base_url('/add_transactions'); }?>">
-    <div class="flex flex-col gap-5 m-5 h-full text-zinc-800">
+    <form method="post" class="w-full" action="<?php if(session('isAdmin')){ echo base_url('/update_stock'); } else if(!session('isAdmin')){ echo base_url('/add_transactions'); }?>">
+    <div class="flex flex-col gap-5 h-full text-zinc-800">
       <input type="hidden" value="<?= $data['id'] ?>" name="id" id="id">
         <input <?php if(!session('isAdmin')){echo "readonly";} ?> type="text" name="item_name" id="item_name" class="text-3xl bg-transparent" value="<?php echo $data['name'] ?>"/>
         <div class="flex flex-row items-center">
@@ -74,13 +74,19 @@
         <div class="form-control">
   <label class="input-group w-full">
     <span class="bg-zinc-700 text-slate-200">Qty</span>
-    <input type="number" name="quantity"  class="input w-full input-bordere bg-slate-50" <?php if(!session('isAdmin')) echo "required"; ?> />
+    <input type="number" name="quantity" max="<?= $data['stock'] ?>"  class="input w-full input-bordere bg-slate-50" <?php if(!session('isAdmin')) echo "required"; ?> />
   </label>
 </div>    <?php if(!session('isAdmin')) { ?>
           <button type="submit" class="p-3 rounded-lg text-slate-200  bg-zinc-700 active:bg-zinc-900 hover:bg-zinc-800"> Order Now </button>
           </form>
           <?php } else{ ?>
           <button type="submit" class="p-3 rounded-lg text-slate-200  bg-zinc-700 active:bg-zinc-900 hover:bg-zinc-800"> Edit Data </button>
+          
+             
+          </form>
+          <form method="post" action="<?= base_url('/delete_stock') ?>" class="w-full">
+               <input type="hidden" value="<?= $data['id'] ?>" name="id" id="id">
+           <button type="submit" onclick="return confirm('Are you sure?')" class="p-3 w-full rounded-lg text-slate-200  bg-red-500 active:bg-red-700 hover:bg-red-600"> Delete Item </button>
           </form>
           <?php } ?>
 
